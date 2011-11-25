@@ -1,6 +1,7 @@
 #ifndef _AIADT_ALISTTPL_H_
 #define _AIADT_ALISTTPL_H_
 
+
 /*
    Array list template emulation
  */
