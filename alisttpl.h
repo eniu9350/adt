@@ -1,13 +1,17 @@
 #ifndef _AIADT_ALISTTPL_H_
 #define _AIADT_ALISTTPL_H_
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 /*
-   Array list template emulation
+	 Array list template emulation
  */
 
 #define NUM_ALIST_INITCAPACITY 100
-#define NUM_ALIST_MAXCAPACITY 1000
+#define NUM_ALIST_MAXCAPACITY 30*1000*1000
 #define NUM_ALIST_INCREMENT 50
 
 #define alisttpl_struct(type)	\
@@ -17,7 +21,12 @@
 		int capacity;	\
 	} type##_alist;	\
 \
-type##_alist* create_##type##_alist()	\
+int expand_##type##_alist(type##_alist* l);	\
+int add_##type(type##_alist* l, type* e);	\
+int remove_##type(type##_alist* l, int n);
+
+#define alisttpl_struct_impl(type)	\
+	type##_alist* create_##type##_alist()	\
 {	\
 	type##_alist* p = (type##_alist*)malloc(sizeof(type));	\
 	p->list = (type**)malloc(NUM_ALIST_INITCAPACITY*(sizeof(type*)));	\
@@ -25,7 +34,6 @@ type##_alist* create_##type##_alist()	\
 	p->capacity = NUM_ALIST_INITCAPACITY;	\
 	return p;	\
 }	\
-\
 int expand_##type##_alist(type##_alist* l)	\
 {	\
 	int newcapacity = l->capacity+NUM_ALIST_INCREMENT;	\
@@ -46,9 +54,10 @@ int expand_##type##_alist(type##_alist* l)	\
 			/*size unchanged*/	\
 		}	\
 	}	\
+	return 0;\
 }	\
 \
-int add_##type##(type##_alist* l, type* e)	\
+int add_##type(type##_alist* l, type* e)	\
 {	\
 	if(l->size==l->capacity)	{	\
 		if(expand_##type##_alist(l)!=0)	{	\
@@ -61,7 +70,7 @@ int add_##type##(type##_alist* l, type* e)	\
 	return 0;	\
 }	\
 \
-int remove_##type##(type##_alist* l, int n)	\
+int remove_##type(type##_alist* l, int n)	\
 {	\
 	int i;	\
 	if(n<0||n>l->size-1)	{	\
@@ -75,5 +84,9 @@ int remove_##type##(type##_alist* l, int n)	\
 	}	\
 	return 0;	\
 }
+
+
+//add expand list to specified size func ( or create in specific size fun)
+
 
 #endif
