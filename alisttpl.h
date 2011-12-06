@@ -19,6 +19,7 @@
 		type** list;	\
 		int size;	\
 		int capacity;	\
+		void* info;	\
 	} type##_alist;	\
 \
 int expand_##type##_alist(type##_alist* l);	\
