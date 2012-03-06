@@ -81,6 +81,7 @@ int remove_##type(type##_alist* l, int n)	\
 	else	{	\
 		for(i=n;i<l->size-1;i++)	{	\
 			l->list[i] = l->list[i+1];	\
+			l->size--;
 		}	\
 	}	\
 	return 0;	\
