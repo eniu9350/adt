@@ -22,6 +22,7 @@
 		void* info;	\
 	} type##_alist;	\
 \
+type##_alist* create_##type##_alist();	\
 int expand_##type##_alist(type##_alist* l);	\
 int add_##type(type##_alist* l, type* e);	\
 int remove_##type(type##_alist* l, int n);
